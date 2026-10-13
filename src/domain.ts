@@ -80,6 +80,13 @@ export interface DispatchRequest {
   query?: Record<string, string>;
   form?: Record<string, string>;
 }
+export type JsonValue =
+  | null
+  | boolean
+  | number
+  | string
+  | JsonValue[]
+  | { [key: string]: JsonValue };
 export interface DispatchResult {
   status: number;
   body: unknown;

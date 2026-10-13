@@ -17,7 +17,9 @@ export class UpstreamError extends Error {
   }
 }
 export function classifyFailure(r: DispatchResult, now: number): UpstreamError {
-  const code = record(r.body).error;
+  const code = record(
+    typeof r.body === "string" ? JSON.parse(r.body) : r.body,
+  ).error;
   const daily =
     r.status === 429 &&
     ["user_limit_exceeded", "app_limit_exceeded"].includes(String(code));
@@ -85,7 +87,9 @@ export class SimklClient {
     const result = await this.dispatch(request);
     if (result.status < 200 || result.status >= 300)
       throw classifyFailure(result, this.now());
-    return result.body;
+    return typeof result.body === "string"
+      ? JSON.parse(result.body)
+      : result.body;
   }
   private token(raw: unknown): TokenGrant {
     const r = record(raw);
