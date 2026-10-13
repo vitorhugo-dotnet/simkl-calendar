@@ -40,7 +40,9 @@ export async function syncWatchlist(
       const raw = await client.items(
         grant,
         category,
-        previous ? { date_from: previous.activities.all } : undefined,
+        previous?.activities.all
+          ? { date_from: previous.activities.all }
+          : undefined,
       );
       for (const item of normalizeWatchlist(category, raw))
         items.set(`${category}:${item.id}`, item);

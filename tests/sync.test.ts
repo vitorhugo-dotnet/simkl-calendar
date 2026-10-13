@@ -1,3 +1,5 @@
+import fresh from "./fixtures/activities-fresh_user.json";
+import partial from "./fixtures/activities-partial_user.json";
 import { expect, it } from "vitest";
 import { syncWatchlist } from "../src/sync";
 import { SimklClient } from "../src/simkl";
@@ -143,4 +145,85 @@ it("malformed activities and deletion inventories fail without erasing cache", a
         : { shows: "bad" },
   }));
   await expect(syncWatchlist(client, grant, snapshot, 1000)).rejects.toThrow();
+});
+
+it("syncs official fresh-user null timestamps and later membership without date_from=null", async () => {
+  let activity: unknown = fresh;
+  const calls: DispatchRequest[] = [];
+  const client = new SimklClient(async (r) => {
+    calls.push(r);
+    return {
+      status: 200,
+      headers: {},
+      body:
+        r.path === "/sync/activities"
+          ? activity
+          : r.path.endsWith("/shows") && activity !== fresh
+            ? {
+                shows: [
+                  {
+                    status: "watching",
+                    show: { title: "New", ids: { simkl: 42 } },
+                  },
+                ],
+              }
+            : {},
+    };
+  });
+  const first = await syncWatchlist(client, grant, null, 1000);
+  expect(first.activities.all).toBeNull();
+  expect(first.items).toEqual([]);
+  calls.length = 0;
+  const unchanged = await syncWatchlist(client, grant, first, 2000);
+  expect(calls).toHaveLength(1);
+  expect(unchanged.items).toEqual([]);
+  calls.length = 0;
+  activity = {
+    ...fresh,
+    all: after,
+    tv_shows: { ...fresh.tv_shows, all: after, watching: after },
+  };
+  const next = await syncWatchlist(client, grant, first, 3000);
+  expect(calls.map((r) => r.path)).toEqual([
+    "/sync/activities",
+    "/sync/all-items/shows",
+  ]);
+  expect(calls[1].query).toBeUndefined();
+  expect(next.items[0].id).toBe(42);
+});
+it("syncs official partially active null buckets and ignores unrelated changes", async () => {
+  const calls: DispatchRequest[] = [];
+  let activity: unknown = partial;
+  const client = new SimklClient(async (r) => {
+    calls.push(r);
+    return {
+      status: 200,
+      headers: {},
+      body:
+        r.path === "/sync/activities"
+          ? activity
+          : r.path.endsWith("/shows")
+            ? {
+                shows: [
+                  {
+                    status: "watching",
+                    show: { title: "Existing", ids: { simkl: 42 } },
+                  },
+                ],
+              }
+            : {},
+    };
+  });
+  const first = await syncWatchlist(client, grant, null, 1000);
+  expect(first.items).toHaveLength(1);
+  calls.length = 0;
+  activity = {
+    ...partial,
+    all: after,
+    tv_shows: { ...partial.tv_shows, rated_at: after, all: after },
+  };
+  expect((await syncWatchlist(client, grant, first, 2000)).items).toEqual(
+    first.items,
+  );
+  expect(calls).toHaveLength(1);
 });

@@ -56,3 +56,19 @@ it("date-only entries use exclusive next-day DTEND", () => {
   expect(text).toContain("DTSTART;VALUE=DATE:20261231");
   expect(text).toContain("DTEND;VALUE=DATE:20270101");
 });
+it("serializes nonzero milliseconds as whole-second UTC modification times", () => {
+  const text = serializeCalendar(
+    [event],
+    Date.parse("2026-10-13T12:00:00.123Z"),
+  );
+  expect(text).toContain("DTSTAMP:20261013T120000Z\r\n");
+  expect(text).toContain("LAST-MODIFIED:20261013T120000Z\r\n");
+  const component = new ICAL.Component(ICAL.parse(text)).getFirstSubcomponent(
+    "vevent",
+  )!;
+  for (const name of ["dtstamp", "last-modified"]) {
+    const time = component.getFirstPropertyValue(name) as ICAL.Time;
+    expect(time.zone).toBe(ICAL.Timezone.utcTimezone);
+    expect(time.toString()).toBe("2026-10-13T12:00:00Z");
+  }
+});

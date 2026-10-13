@@ -51,10 +51,10 @@ export interface Dataset {
   modifiedAt: number;
 }
 export interface Activities {
-  all: string;
-  tv_shows: Record<string, string>;
-  anime: Record<string, string>;
-  movies: Record<string, string>;
+  all: string | null;
+  tv_shows: Record<string, string | null>;
+  anime: Record<string, string | null>;
+  movies: Record<string, string | null>;
 }
 export interface WatchSnapshot {
   items: WatchItem[];

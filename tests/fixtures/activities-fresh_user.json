@@ -1,0 +1,46 @@
+{
+  "all": null,
+  "settings": {
+    "all": null
+  },
+  "tv_shows": {
+    "all": null,
+    "rated_at": null,
+    "playback": null,
+    "plantowatch": null,
+    "watching": null,
+    "completed": null,
+    "hold": null,
+    "dropped": null,
+    "removed_from_list": null
+  },
+  "anime": {
+    "all": null,
+    "rated_at": null,
+    "playback": null,
+    "plantowatch": null,
+    "watching": null,
+    "completed": null,
+    "hold": null,
+    "dropped": null,
+    "removed_from_list": null
+  },
+  "movies": {
+    "all": null,
+    "rated_at": null,
+    "playback": null,
+    "plantowatch": null,
+    "completed": null,
+    "dropped": null,
+    "removed_from_list": null
+  },
+  "custom_lists": {
+    "lists": {
+      "all": null,
+      "regular": null,
+      "favorites": null,
+      "recommendations": null,
+      "auto": null
+    }
+  }
+}

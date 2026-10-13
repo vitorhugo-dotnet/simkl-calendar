@@ -1,0 +1,46 @@
+{
+  "all": "2024-08-19T12:34:56Z",
+  "settings": {
+    "all": "2023-11-02T18:01:45Z"
+  },
+  "tv_shows": {
+    "all": "2024-08-19T12:34:56Z",
+    "rated_at": "2024-08-19T12:34:56Z",
+    "playback": null,
+    "plantowatch": "2024-07-30T09:12:00Z",
+    "watching": "2024-08-19T12:34:56Z",
+    "completed": "2024-08-15T22:18:00Z",
+    "hold": null,
+    "dropped": null,
+    "removed_from_list": "2024-08-10T19:45:13Z"
+  },
+  "anime": {
+    "all": null,
+    "rated_at": null,
+    "playback": null,
+    "plantowatch": null,
+    "watching": null,
+    "completed": null,
+    "hold": null,
+    "dropped": null,
+    "removed_from_list": null
+  },
+  "movies": {
+    "all": "2024-08-12T20:00:00Z",
+    "rated_at": null,
+    "playback": null,
+    "plantowatch": "2024-08-12T20:00:00Z",
+    "completed": null,
+    "dropped": null,
+    "removed_from_list": null
+  },
+  "custom_lists": {
+    "lists": {
+      "all": "2024-08-14T08:20:11Z",
+      "regular": null,
+      "favorites": "2024-08-14T08:20:11Z",
+      "recommendations": null,
+      "auto": null
+    }
+  }
+}

@@ -32,7 +32,7 @@ export function serializeCalendar(
 ): string {
   const stamp = new Date(modifiedAt)
     .toISOString()
-    .replace(".000", "")
+    .replace(/\.\d{3}Z$/, "Z")
     .replace(/[-:]/g, "");
   const lines = [
     "BEGIN:VCALENDAR",

@@ -56,16 +56,16 @@ export function identifiedUrl(
 }
 export function parseActivities(raw: unknown): Activities {
   const r = record(raw);
-  if (!validDate(r.all) || String(r.all).length !== 20)
+  if (r.all !== null && (!validDate(r.all) || r.all.length !== 20))
     throw Error("Invalid activity response");
-  const groups: Record<string, Record<string, string>> = {};
+  const groups: Record<string, Record<string, string | null>> = {};
   for (const name of ["tv_shows", "anime", "movies"]) {
     const value = r[name];
     if (!value || typeof value !== "object" || Array.isArray(value))
       throw Error("Invalid activity response");
-    const group: Record<string, string> = {};
+    const group: Record<string, string | null> = {};
     for (const [key, v] of Object.entries(record(value))) {
-      if (!validDate(v) || v.length !== 20)
+      if (v !== null && (!validDate(v) || v.length !== 20))
         throw Error("Invalid activity response");
       group[key] = v;
     }
