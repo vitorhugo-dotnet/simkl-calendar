@@ -10,9 +10,7 @@ export function registerAccount(app: App): void {
     const account = sessionAccount(c);
     const view = account ? await account.stub.view(account.session) : null;
     if (!account || !view) return c.redirect(config.origin + "/");
-    return c.html(
-      accountPage(view, config.origin, account.address),
-    );
+    return c.html(accountPage(view, config.origin, account.address));
   });
   const actions = [
     "preferences",
