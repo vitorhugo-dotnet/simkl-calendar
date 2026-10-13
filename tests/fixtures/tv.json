@@ -1,0 +1,56 @@
+{
+  "calendar": [
+    {
+      "simkl_id": 3173529,
+      "date": "2026-10-12T04:00:00Z",
+      "finale_type": null,
+      "episode": {
+        "season": 1,
+        "episode": 68,
+        "title": "Episode 68",
+        "runtime": 10,
+        "url": "https://simkl.com/tv/3173529/lukasz-lamza/season-1/episode-68/"
+      }
+    }
+  ],
+  "metadata": {
+    "3173529": {
+      "title": "Lukasz Lamza",
+      "url": "/tv/3173529/lukasz-lamza",
+      "alt_titles": [],
+      "poster": "20/20275689e0e6e95a7e",
+      "fanart": null,
+      "ids": {
+        "simkl_id": 3173529,
+        "slug": "lukasz-lamza",
+        "tvdb": "455040",
+        "tvdbslug": "lukasz-lamza"
+      },
+      "release_date": "2020-10-26T04:00:00Z",
+      "rank": null,
+      "drop_rate": "-",
+      "watched": null,
+      "plan_to_watch": null,
+      "watching": 0,
+      "completed": 0,
+      "ratings": {
+        "simkl": {
+          "rating": null,
+          "votes": null
+        },
+        "imdb": {
+          "rating": null,
+          "votes": 10
+        }
+      },
+      "country": "pl",
+      "original_language": "pl",
+      "runtime": "17m",
+      "status": "ongoing",
+      "total_episodes": 75,
+      "network": null,
+      "genres": ["Documentary", "News", "Podcast"],
+      "trailer": null
+    }
+  }
+}

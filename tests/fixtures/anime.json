@@ -1,0 +1,72 @@
+{
+  "calendar": [
+    {
+      "simkl_id": 2333760,
+      "date": "2026-10-11T15:00:00Z",
+      "finale_type": null,
+      "episode": {
+        "episode": 160,
+        "title": "Episode 160",
+        "runtime": 25,
+        "url": "https://simkl.com/anime/2333760/tunshi-xingkong/episode-160/"
+      }
+    }
+  ],
+  "metadata": {
+    "2333760": {
+      "title": "Swallowed Star 4th Season",
+      "url": "/anime/2333760/tunshi-xingkong",
+      "title_romaji": "Tunshi Xingkong",
+      "alt_titles": [
+        {
+          "name": "\u541e\u566c\u661f\u7a7a \u7b2c\u56db\u5b63",
+          "lang": 27,
+          "type": "official"
+        }
+      ],
+      "poster": "15/150128280737b9f221",
+      "fanart": null,
+      "ids": {
+        "simkl_id": 2333760,
+        "slug": "tunshi-xingkong",
+        "mal": "56524",
+        "anilist": "166219",
+        "kitsu": "48061",
+        "anidb": "18365"
+      },
+      "release_date": "2023-10-02T15:00:00Z",
+      "rank": 483,
+      "drop_rate": "4.5%",
+      "watched": 452,
+      "plan_to_watch": 64,
+      "watching": 452,
+      "completed": 0,
+      "ratings": {
+        "simkl": {
+          "rating": 8.88,
+          "votes": 60
+        },
+        "mal": {
+          "rating": 8.3,
+          "votes": 2359
+        }
+      },
+      "country": null,
+      "original_language": null,
+      "runtime": "25m",
+      "status": "ongoing",
+      "anime_type": "ona",
+      "total_episodes": 162,
+      "network": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy",
+        "Martial Arts",
+        "Sci-Fi",
+        "Shounen"
+      ],
+      "trailer": null
+    }
+  }
+}

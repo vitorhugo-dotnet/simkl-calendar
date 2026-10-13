@@ -1,0 +1,6 @@
+# Copy to .dev.vars (gitignored). Use a dedicated development Simkl registration.
+SIMKL_CLIENT_ID=replace-with-development-client-id
+SIMKL_CLIENT_SECRET=replace-with-development-client-secret
+# Generate two independent 32-byte base64 values; do not reuse these placeholders.
+TOKEN_ENCRYPTION_KEY=replace-with-32-byte-base64-key
+ACCOUNT_LOOKUP_KEY=replace-with-different-32-byte-base64-key

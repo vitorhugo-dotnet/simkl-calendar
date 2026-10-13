@@ -1,0 +1,22 @@
+{
+  "name": "simkl-calendar",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": false },
+  "vars": {
+    "APP_ORIGIN": "http://localhost:8787",
+    "APP_NAME": "simkl-calendar",
+    "APP_VERSION": "0.1.0",
+    "SUBSCRIPTIONS_APPROVED": "false"
+  },
+  "durable_objects": {
+    "bindings": [
+      { "name": "ACCOUNT", "class_name": "Account" },
+      { "name": "COORDINATOR", "class_name": "Coordinator" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["Account", "Coordinator"] }
+  ]
+}

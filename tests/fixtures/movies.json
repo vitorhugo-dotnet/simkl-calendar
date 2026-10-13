@@ -1,0 +1,47 @@
+{
+  "calendar": [
+    {
+      "simkl_id": 3276803,
+      "date": "2026-10-12T04:00:00Z",
+      "finale_type": null
+    }
+  ],
+  "metadata": {
+    "3276803": {
+      "title": "Un Lugar Mejor",
+      "url": "/movies/3276803/un-lugar-mejor",
+      "alt_titles": [],
+      "poster": "20/208330477b990eeecf",
+      "fanart": null,
+      "ids": {
+        "simkl_id": 3276803,
+        "slug": "un-lugar-mejor",
+        "tmdb": "1789301"
+      },
+      "release_date": "2026-10-12T16:00:00Z",
+      "rank": null,
+      "drop_rate": "-",
+      "watched": null,
+      "plan_to_watch": null,
+      "watching": 0,
+      "completed": 0,
+      "ratings": {
+        "simkl": {
+          "rating": null,
+          "votes": null
+        },
+        "imdb": {
+          "rating": null,
+          "votes": 91
+        }
+      },
+      "country": null,
+      "original_language": "es",
+      "runtime": "1h",
+      "status": "premiere",
+      "dvd_date": "10/12/2027",
+      "genres": ["Adventure", "Comedy"],
+      "trailer": null
+    }
+  }
+}
