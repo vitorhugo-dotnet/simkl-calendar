@@ -12,7 +12,6 @@ export default defineWorkersConfig({
             TOKEN_ENCRYPTION_KEY:
               "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
             ACCOUNT_LOOKUP_KEY: "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=",
-            SUBSCRIPTIONS_APPROVED: "true",
           },
         },
       },

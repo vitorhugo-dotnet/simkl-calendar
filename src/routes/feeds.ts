@@ -1,5 +1,4 @@
 import type { App } from "./common";
-import { validateEnv } from "../env";
 import type { FeedCategory } from "../domain";
 export function registerFeeds(app: App): void {
   app.get("/feeds/:account/:secret/:file", async (c) => {
@@ -9,15 +8,10 @@ export function registerFeeds(app: App): void {
     const match = /^(all|tv|anime|movies)\.ics$/.exec(file);
     if (!/^[\w-]{43}$/.test(address) || !/^[\w-]{43}$/.test(secret) || !match)
       return c.text("Not found", 404);
-    const config = validateEnv(c.env);
     const account = c.env.ACCOUNT.get(c.env.ACCOUNT.idFromName(address));
     const category = match[1] as FeedCategory;
     if (!(await account.authorizeFeed(secret, category)))
       return c.text("Not found", 404);
-    if (!config.subscriptionsApproved)
-      return c.text("Subscriptions are not enabled by this operator.", 503, {
-        "Retry-After": "3600",
-      });
     try {
       const feed = await account.feed(secret, category);
       if (!feed) return c.text("Not found", 404);

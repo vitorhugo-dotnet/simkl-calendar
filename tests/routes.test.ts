@@ -153,7 +153,7 @@ it("displays four canonical URLs and protects mutations with origin/session CSRF
   ).toBe(302);
   expect(await a.stub.feed(a.view.secret!, "all")).toBeNull();
 });
-it("feeds enforce live secrets, private caching, enabled subscriptions and rotation", async () => {
+it("feeds enforce live secrets, private caching and rotation", async () => {
   const a = await connected();
   const path = `/feeds/${a.address}/${a.view.secret}/all.ics`;
   const r = await request(path);
@@ -161,10 +161,6 @@ it("feeds enforce live secrets, private caching, enabled subscriptions and rotat
   expect(r.headers.get("content-type")).toBe("text/calendar; charset=utf-8");
   expect(r.headers.get("cache-control")).toBe("private, no-store");
   expect(await r.text()).toContain("BEGIN:VCALENDAR");
-  expect(
-    (await request(path, undefined, { SUBSCRIPTIONS_APPROVED: "false" }))
-      .status,
-  ).toBe(503);
   expect((await request(`/feeds/${a.address}/wrong/all.ics`)).status).toBe(404);
   await a.stub.mutate(a.session, a.view.csrf, { type: "rotate" });
   expect((await request(path)).status).toBe(404);

@@ -4,7 +4,7 @@ A standalone TypeScript + Hono Cloudflare Worker for personalized, revocable iCa
 
 Connect with read-only OAuth V2/PKCE, choose TV/anime/movie categories and watchlist statuses, then copy a combined feed or a category feed into a calendar client. Rotate or revoke links from the account page. No cron, D1 database, or background polling is configured.
 
-**Subscriptions ship disabled.** Before enabling them, complete the [release usage review](docs/release-review.md). Public calendar APIs are documented for app use; permission to replace VIP feeds or refresh watchlists through unattended calendar subscriptions has not been confirmed.
+**Usage review:** Valid subscription links work without an operator feature flag. Before publishing or distributing a live instance, complete the [release usage review](docs/release-review.md). Simkl permission to replace VIP feeds or refresh watchlists through unattended calendar subscriptions remains unconfirmed.
 
 ## Local development
 
@@ -19,7 +19,7 @@ npm run dev
 
 Generate two independent encryption/lookup keys using `openssl rand -base64 32`, inserting them into `.dev.vars` rather than sharing terminal output or logs. Register `http://localhost/auth/callback` for development (Simkl ignores loopback ports at authorization); the Worker sends exactly `http://localhost:8787/auth/callback` on both authorization and exchange. Use the same host throughout; `127.0.0.1` and `localhost` are different registrations. Copyable links use `APP_ORIGIN`, never a request's Host header.
 
-Open `http://localhost:8787`, choose **Connect Simkl**, and approve `media:read`. The account page exposes filters, four subscription URLs, rotation, revocation, refresh, sign-out, and disconnection. For a locally approved usage test, set `SUBSCRIPTIONS_APPROVED` to `"true"` in Wrangler configuration. Otherwise authenticated feed requests return 503; invalid links return 404 regardless of the flag.
+Open `http://localhost:8787`, choose **Connect Simkl**, and approve `media:read`. The account page exposes filters, four subscription URLs, rotation, revocation, refresh, sign-out, and disconnection. Valid subscription links return personalized `.ics` feeds; invalid or revoked links return 404. Upstream outages can still return 503.
 
 ```sh
 npm run check       # formatting, lint, strict TypeScript, Workers tests, dry-run build

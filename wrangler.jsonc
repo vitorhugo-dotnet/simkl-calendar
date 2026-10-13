@@ -7,8 +7,7 @@
   "vars": {
     "APP_ORIGIN": "http://localhost:8787",
     "APP_NAME": "simkl-calendar",
-    "APP_VERSION": "0.1.0",
-    "SUBSCRIPTIONS_APPROVED": "false"
+    "APP_VERSION": "0.1.0"
   },
   "durable_objects": {
     "bindings": [

@@ -20,7 +20,6 @@ export function accountPage(
   view: AccountView,
   origin: string,
   address: string,
-  approved: boolean,
 ): string {
   const csrf = `<input type="hidden" name="csrf" value="${escapeHtml(view.csrf)}">`;
   const action = (path: string, label: string) =>
@@ -36,8 +35,6 @@ export function accountPage(
     dropped: "Dropped",
   };
   let body = `<p>${view.connected ? "Simkl connected." : "Reconnect Simkl to restore access."}</p><p><a href="/auth/login">Reconnect Simkl</a></p>`;
-  if (!approved)
-    body += "<p>Subscriptions are awaiting the operator’s usage review.</p>";
   if (view.degraded)
     body +=
       "<p>Simkl is temporarily unavailable. Your last available watchlist may be used for up to 24 hours.</p>";

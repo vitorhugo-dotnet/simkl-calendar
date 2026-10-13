@@ -11,12 +11,7 @@ export function registerAccount(app: App): void {
     const view = account ? await account.stub.view(account.session) : null;
     if (!account || !view) return c.redirect(config.origin + "/");
     return c.html(
-      accountPage(
-        view,
-        config.origin,
-        account.address,
-        config.subscriptionsApproved,
-      ),
+      accountPage(view, config.origin, account.address),
     );
   });
   const actions = [

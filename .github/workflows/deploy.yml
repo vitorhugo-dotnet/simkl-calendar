@@ -40,7 +40,6 @@ jobs:
       - name: Prepare production configuration
         env:
           APP_ORIGIN: ${{ vars.APP_ORIGIN }}
-          SUBSCRIPTIONS_APPROVED: ${{ vars.SUBSCRIPTIONS_APPROVED || 'false' }}
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
@@ -51,13 +50,9 @@ jobs:
           if (origin.protocol !== 'https:' || origin.username || origin.password || origin.search || origin.hash || origin.pathname !== '/') {
             throw new Error('APP_ORIGIN must be a canonical HTTPS origin');
           }
-          if (!['true', 'false'].includes(process.env.SUBSCRIPTIONS_APPROVED)) {
-            throw new Error('SUBSCRIPTIONS_APPROVED must be true or false');
-          }
           const config = JSON.parse(fs.readFileSync('wrangler.jsonc', 'utf8'));
           config.main = '../src/index.ts';
           config.vars.APP_ORIGIN = origin.origin;
-          config.vars.SUBSCRIPTIONS_APPROVED = process.env.SUBSCRIPTIONS_APPROVED;
           fs.mkdirSync('.wrangler', { recursive: true });
           fs.writeFileSync('.wrangler/deploy.jsonc', JSON.stringify(config));
           NODE

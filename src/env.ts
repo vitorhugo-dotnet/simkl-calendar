@@ -10,11 +10,9 @@ export interface Env {
   APP_ORIGIN: string;
   APP_NAME: string;
   APP_VERSION: string;
-  SUBSCRIPTIONS_APPROVED: string;
 }
 export interface Config {
   origin: string;
-  subscriptionsApproved: boolean;
 }
 export function keyBytes(key: string): Uint8Array<ArrayBuffer> {
   try {
@@ -51,6 +49,5 @@ export function validateEnv(env: Env): Config {
     throw Error("Missing application configuration");
   return {
     origin: u.origin,
-    subscriptionsApproved: env.SUBSCRIPTIONS_APPROVED === "true",
   };
 }

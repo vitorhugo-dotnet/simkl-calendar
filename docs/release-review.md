@@ -1,13 +1,13 @@
 # Release review — not yet approved
 
-Implementation and fixture-based verification do not establish permission to redistribute personalized calendars. Keep `SUBSCRIPTIONS_APPROVED=false` until the maintainer records this review. Do not advertise the integration as bypassing Simkl VIP or call VIP-only endpoints.
+Implementation and fixture-based verification do not establish permission to redistribute personalized calendars. There is no operator flag for disabling feeds: the maintainer must record this review before distributing working subscriptions. Do not advertise the integration as bypassing Simkl VIP or call VIP-only endpoints.
 
 ## Usage decision
 
 - [ ] Review the current API rules, Calendar V2 documentation, API/CDN terms and Simkl terms at https://simkl.com/about/policies/terms/.
 - [ ] Confirm whether third-party subscribable personalized feeds are permitted, including overlap with paid/VIP feeds.
 - [ ] Confirm whether request-time watchlist synchronization triggered by unattended calendar clients meets Simkl's active-user-interaction rule; obtain Simkl approval if the published terms do not settle it.
-- [ ] If approval is denied or scope is narrower, keep feed delivery disabled and adjust scope before release.
+- [ ] If approval is denied or scope is narrower, do not publish or distribute working feeds; adjust scope before release.
 - [ ] Record reviewer/date, source links or Simkl correspondence, permitted audience/use/scale, and any restrictions. No approval has been obtained in this implementation session.
 - [ ] Obtain a commercial license if revenue reaches USD 150/month, per the current API rules; recheck the threshold at release.
 
