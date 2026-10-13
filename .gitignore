@@ -149,3 +149,7 @@ vite.config.ts.timestamp-*
 .turbo
 
 work/
+.dev.vars*
+!.dev.vars.example
+.wrangler/
+dist/
