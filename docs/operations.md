@@ -22,7 +22,7 @@ User API responses are limited to 20 MiB and CDN datasets to 10 MiB, with 15-sec
 | `CLOUDFLARE_API_TOKEN` | GitHub Actions secret | Account-scoped deployment token |
 | `CLOUDFLARE_ACCOUNT_ID` | GitHub Actions secret | Intended Cloudflare account |
 
-`wrangler.jsonc` defaults to loopback development origin and disabled subscriptions. The deploy workflow requires a valid production APP_ORIGIN and writes a generated config with environment values supplied through process variables, avoiding shell interpolation. Runtime OAuth/encryption/lookup credentials are provisioned independently; GitHub's deployment job does not need those values or place them in bundles. Do not pass runtime secrets using CLI arguments or print them to CI logs.
+`wrangler.jsonc` defaults to loopback development origin and disabled subscriptions. The deploy workflow requires a valid production APP_ORIGIN and writes a generated config with environment values supplied through process variables, avoiding shell interpolation. If APP_ORIGIN is not configured, the workflow reports a notice and skips deployment; configure it in the production environment to enable deploys. Runtime OAuth/encryption/lookup credentials are provisioned independently; GitHub's deployment job does not need those values or place them in bundles. Do not pass runtime secrets using CLI arguments or print them to CI logs.
 
 ## Bootstrap
 

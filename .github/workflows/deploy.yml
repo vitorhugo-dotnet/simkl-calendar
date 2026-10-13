@@ -30,12 +30,18 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Prepare production configuration
+        id: production_config
         env:
           APP_ORIGIN: ${{ vars.APP_ORIGIN }}
           SUBSCRIPTIONS_APPROVED: ${{ vars.SUBSCRIPTIONS_APPROVED || 'false' }}
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
+          if (!process.env.APP_ORIGIN?.trim()) {
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, 'configured=false\n');
+            console.log('::notice::Skipping deployment because production APP_ORIGIN is not configured.');
+            process.exit(0);
+          }
           const origin = new URL(process.env.APP_ORIGIN);
           if (origin.protocol !== 'https:' || origin.username || origin.password || origin.search || origin.hash || origin.pathname !== '/') {
             throw new Error('APP_ORIGIN must be a canonical HTTPS origin');
@@ -49,9 +55,11 @@ jobs:
           config.vars.SUBSCRIPTIONS_APPROVED = process.env.SUBSCRIPTIONS_APPROVED;
           fs.mkdirSync('.wrangler', { recursive: true });
           fs.writeFileSync('.wrangler/deploy.jsonc', JSON.stringify(config));
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, 'configured=true\n');
           NODE
       - name: Verify revision is still main head
         id: revision
+        if: steps.production_config.outputs.configured == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
@@ -65,7 +73,7 @@ jobs:
             echo 'Skipping an outdated revision.'
           fi
       - uses: cloudflare/wrangler-action@v4
-        if: steps.revision.outputs.current == 'true'
+        if: steps.production_config.outputs.configured == 'true' && steps.revision.outputs.current == 'true'
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
