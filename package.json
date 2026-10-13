@@ -21,11 +21,11 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.15",
-    "@cloudflare/vitest-pool-workers": "0.12.21",
+    "@cloudflare/vitest-pool-workers": "0.23.0",
     "@cloudflare/workers-types": "^5.20261013.1",
     "ical.js": "^2.2.1",
     "typescript": "^7.0.2",
-    "vitest": "3.2.4",
+    "vitest": "5.0.4",
     "wrangler": "^4.150.0"
   }
 }
