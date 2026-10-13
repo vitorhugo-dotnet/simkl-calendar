@@ -1,6 +1,6 @@
 import { env, runInDurableObject, fetchMock } from "cloudflare:test";
 import { expect, it, afterEach, beforeEach } from "vitest";
-import { accountAddress, hashSecret } from "../src/security";
+import { accountAddress } from "../src/security";
 import { ChunkStore } from "../src/storage";
 import { Account } from "../src/account";
 const grant = {

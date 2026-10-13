@@ -303,6 +303,21 @@ export class Account extends DurableObject<Env> {
       throw new UpstreamError(503, "transient", state.retryAt);
     }
   }
+  async authorizeFeed(
+    secret: string,
+    category: FeedCategory,
+  ): Promise<boolean> {
+    return this.serial.run(async () => {
+      const state = await this.saved();
+      return (
+        !!state?.credentials &&
+        !!state.secretHash &&
+        /^[\w-]{43}$/.test(secret) &&
+        ["all", ...CATEGORIES].includes(category) &&
+        (await hashSecret(secret)) === state.secretHash
+      );
+    });
+  }
   async feed(
     secret: string,
     category: FeedCategory,

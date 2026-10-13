@@ -1,5 +1,6 @@
 import type { CalendarEvent } from "./domain";
 const clean = (value: string) =>
+  // biome-ignore lint/suspicious/noControlCharactersInRegex: Strip controls forbidden in calendar text.
   value.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/g, "");
 const text = (value: string) =>
   clean(value)

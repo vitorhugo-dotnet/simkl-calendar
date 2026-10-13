@@ -163,9 +163,7 @@ export class Coordinator extends DurableObject<Env> {
       throw Error("Calendar dataset unavailable");
     }
   }
-  async dispatch(
-    request: DispatchRequest,
-  ): Promise<{
+  async dispatch(request: DispatchRequest): Promise<{
     status: number;
     body: string;
     headers: Record<string, string>;
@@ -251,7 +249,7 @@ export class Coordinator extends DurableObject<Env> {
             headers: Object.fromEntries(
               ["retry-after", "x-ratelimit-remaining"].flatMap((key) =>
                 response.headers.has(key)
-                  ? [[key, response.headers.get(key)!]]
+                  ? [[key, response.headers.get(key) ?? ""]]
                   : [],
               ),
             ),
