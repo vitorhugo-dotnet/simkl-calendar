@@ -13,24 +13,31 @@ concurrency:
 jobs:
   deploy:
     if: >-
-      github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.event == 'push' &&
-      github.event.workflow_run.head_branch == 'main' &&
-      github.event.workflow_run.head_repository.id == github.repository_id
+      (github.event_name == 'workflow_dispatch' &&
+       github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'push' &&
+       github.event.workflow_run.head_branch == 'main' &&
+       github.event.workflow_run.head_repository.id == github.repository_id)
     runs-on: ubuntu-latest
     environment: production
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: ${{ github.event_name == 'workflow_dispatch' && github.sha || github.event.workflow_run.head_sha }}
           persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: npm
       - run: npm ci
+      - name: Verify quality gates for manual deployment
+        if: github.event_name == 'workflow_dispatch'
+        run: npm run check
+        env:
+          WRANGLER_SEND_METRICS: 'false'
       - name: Prepare production configuration
-        id: production_config
         env:
           APP_ORIGIN: ${{ vars.APP_ORIGIN }}
           SUBSCRIPTIONS_APPROVED: ${{ vars.SUBSCRIPTIONS_APPROVED || 'false' }}
@@ -38,9 +45,7 @@ jobs:
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
           if (!process.env.APP_ORIGIN?.trim()) {
-            fs.appendFileSync(process.env.GITHUB_OUTPUT, 'configured=false\n');
-            console.log('::notice::Skipping deployment because production APP_ORIGIN is not configured.');
-            process.exit(0);
+            throw new Error('Production APP_ORIGIN must be configured before deployment.');
           }
           const origin = new URL(process.env.APP_ORIGIN);
           if (origin.protocol !== 'https:' || origin.username || origin.password || origin.search || origin.hash || origin.pathname !== '/') {
@@ -55,15 +60,13 @@ jobs:
           config.vars.SUBSCRIPTIONS_APPROVED = process.env.SUBSCRIPTIONS_APPROVED;
           fs.mkdirSync('.wrangler', { recursive: true });
           fs.writeFileSync('.wrangler/deploy.jsonc', JSON.stringify(config));
-          fs.appendFileSync(process.env.GITHUB_OUTPUT, 'configured=true\n');
           NODE
       - name: Verify revision is still main head
         id: revision
-        if: steps.production_config.outputs.configured == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
-          DEPLOY_SHA: ${{ github.event.workflow_run.head_sha }}
+          DEPLOY_SHA: ${{ github.event_name == 'workflow_dispatch' && github.sha || github.event.workflow_run.head_sha }}
         run: |
           current_sha=$(gh api "repos/$REPOSITORY/commits/main" --jq .sha)
           if [ "$current_sha" = "$DEPLOY_SHA" ]; then
@@ -73,7 +76,7 @@ jobs:
             echo 'Skipping an outdated revision.'
           fi
       - uses: cloudflare/wrangler-action@v4
-        if: steps.production_config.outputs.configured == 'true' && steps.revision.outputs.current == 'true'
+        if: steps.revision.outputs.current == 'true'
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
