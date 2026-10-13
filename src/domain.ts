@@ -104,3 +104,14 @@ export function positiveId(value: unknown): number | null {
     ? value
     : null;
 }
+export interface AccountView {
+  preferences: Preferences;
+  csrf: string;
+  secret: string | null;
+  validatedAt: number | null;
+  connected: boolean;
+  degraded: boolean;
+}
+export type AccountAction =
+  | { type: "preferences"; preferences: Preferences }
+  | { type: "refresh" | "rotate" | "revoke" | "disconnect" | "logout" };
